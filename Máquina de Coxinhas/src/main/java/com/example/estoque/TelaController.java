@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class TelaController {
-    private final MaquinaCoxinha MAQUINACOXINHA = new MaquinaCoxinha();
+    private MaquinaCoxinha maquinaCoxinha;
 
     @FXML
     private TextField quantidadeCoxinhaAtual;
@@ -19,48 +19,50 @@ public class TelaController {
     @FXML
     private Label mensagemErro;
 
-    private int quantidadeCoxinha;
-
+    @FXML
+    private void initialize(){
+        maquinaCoxinha = new MaquinaCoxinha();
+    }
 
     @FXML
     private void abastecer(){
-        MAQUINACOXINHA.abastecer(Integer.parseInt(abastecerCoxinha.getText()));
-        quantidadeCoxinhaAtual.setText(String.valueOf(MAQUINACOXINHA.getQuantidadeCoxinha()));
+        maquinaCoxinha.abastecer(Integer.parseInt(abastecerCoxinha.getText()));
+        quantidadeCoxinhaAtual.setText(String.valueOf(maquinaCoxinha.getQuantidadeCoxinha()));
         abastecerCoxinha.setText("");
         mensagemErro.setText("");
     }
 
     @FXML
     private void venderCoxinha(){
-        quantidadeCoxinha = MAQUINACOXINHA.getQuantidadeCoxinha();
-        MAQUINACOXINHA.vender();
-        quantidadeCoxinhaAtual.setText(String.valueOf(MAQUINACOXINHA.getQuantidadeCoxinha()));
-        if (quantidadeCoxinha == MAQUINACOXINHA.getQuantidadeCoxinha()){
-            mensagemErro.setText("Quantidade de coxinhas é 0");
+        if (maquinaCoxinha.getQuantidadeCoxinha() > 0 ){
+            maquinaCoxinha.vender();
+            mensagemErro.setText("");
         }
         else{
             mensagemErro.setText("");
+            mensagemErro.setText("Quantidade de coxinhas é 0");
         }
+        quantidadeCoxinhaAtual.setText(String.valueOf(maquinaCoxinha.getQuantidadeCoxinha()));
     }
 
     @FXML
     private void vender(){
-        quantidadeCoxinha = MAQUINACOXINHA.getQuantidadeCoxinha();
-        MAQUINACOXINHA.vender(Integer.parseInt(String.valueOf(venderCoxinha.getText())));
-        quantidadeCoxinhaAtual.setText(String.valueOf(MAQUINACOXINHA.getQuantidadeCoxinha()));
-        venderCoxinha.setText("");
-        if (quantidadeCoxinha == MAQUINACOXINHA.getQuantidadeCoxinha()){
-            mensagemErro.setText("Não há este número de coxinhas");
+        if (maquinaCoxinha.getQuantidadeCoxinha() >= Integer.parseInt(String.valueOf(venderCoxinha.getText()))){
+            maquinaCoxinha.vender(Integer.parseInt(String.valueOf(venderCoxinha.getText())));
+            mensagemErro.setText("");
         }
         else{
             mensagemErro.setText("");
+            mensagemErro.setText("Não há este número de coxinhas");
         }
+        quantidadeCoxinhaAtual.setText(String.valueOf(maquinaCoxinha.getQuantidadeCoxinha()));
+        venderCoxinha.setText("");
     }
 
     @FXML
     private void zerarCoxinha(){
-        MAQUINACOXINHA.zerarMaquina();
-        quantidadeCoxinhaAtual.setText(String.valueOf(MAQUINACOXINHA.getQuantidadeCoxinha()));
+        maquinaCoxinha.zerarMaquina();
+        quantidadeCoxinhaAtual.setText(String.valueOf(maquinaCoxinha.getQuantidadeCoxinha()));
         mensagemErro.setText("");
     }
 

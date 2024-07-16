@@ -13,15 +13,11 @@ public class MaquinaCoxinha {
     }
 
     public void vender(){
-        if(quantidadeCoxinha > 0){
-            quantidadeCoxinha--;
-        }
+        quantidadeCoxinha--;
     }
 
     public void vender(int venderCoxinha){
-        if(quantidadeCoxinha >= venderCoxinha){
-            quantidadeCoxinha -= venderCoxinha;
-        }
+        quantidadeCoxinha -= venderCoxinha;
     }
 
     public void zerarMaquina(){
